@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel - Room Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Global Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #333;
+    }
+
+    /* Header */
+    header {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    /* Section Containers */
+    .section__container {
+      width: 80%;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Form Elements */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    label {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    input, select, textarea {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .checkbox-group label {
+      display: block;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .section__container {
+        width: 95%;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-logo">Hotel Management</div>
+  </header>
+
+  <!-- Add Room Section -->
+  <section id="add-room" class="section__container">
+    <h1>Add New Room</h1>
+    <form method="POST" action="add_room_process.php" class="column-form">
+      <div class="form-group">
+        <label for="room_name">Room Name:</label>
+        <input type="text" id="room_name" name="room_name" placeholder="Enter room name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="room_capacity">Room Capacity:</label>
+        <input type="number" id="room_capacity" name="room_capacity" placeholder="Enter room capacity" required />
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price (per night):</label>
+        <input type="number" id="price" name="price" step="0.01" placeholder="Enter price in USD" required />
+      </div>
+
+      <div class="form-group">
+        <label for="room_type">Room Type:</label>
+        <select id="room_type" name="room_type" required>
+          <option value="" disabled selected>Select room type</option>
+          <option value="Single">Single</option>
+          <option value="Double">Double</option>
+          <option value="Suite">Suite</option>
+          <option value="Deluxe">Deluxe</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="amenities">Amenities:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="amenities[]" value="Free Wi-Fi" /> Free Wi-Fi</label>
+          <label><input type="checkbox" name="amenities[]" value="Air Conditioning" /> Air Conditioning</label>
+          <label><input type="checkbox" name="amenities[]" value="Mini Bar" /> Mini Bar</label>
+          <label><input type="checkbox" name="amenities[]" value="Room Service" /> Room Service</label>
+          <label><input type="checkbox" name="amenities[]" value="Balcony or View" /> Balcony or View</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" value="Save Room" />
+      </div>
+    </form>
+  </section>
+
+  <!-- Delete Room Section -->
+  <section id="delete-room" class="section__container">
+    <h1>Delete Room</h1>
+    <form method="POST" action="delete_room.php">
+      <label for="room_name">Room Name:</label>
+      <input type="text" id="room_name" name="room_name" required placeholder="Enter room name to delete" />
+      <input type="submit" value="Delete Room" />
+    </form>
+  </section>
+
+  <!-- Filter Rooms Section -->
+  <section id="filter-rooms" class="section__container">
+    <h1>Filter Rooms by Amenities</h1>
+    <form method="GET" action="filter_rooms.php">
+      <label for="amenities">Select Amenities:</label>
+      <div>
+        <input type="checkbox" name="amenities[]" value="Free Wi-Fi" /> Free Wi-Fi <br />
+        <input type="checkbox" name="amenities[]" value="Air Conditioning" /> Air Conditioning <br />
+        <input type="checkbox" name="amenities[]" value="Mini Bar" /> Mini Bar <br />
+        <input type="checkbox" name="amenities[]" value="Room Service" /> Room Service <br />
+        <input type="checkbox" name="amenities[]" value="Balcony or View" /> Balcony or View <br />
+      </div>
+      <input type="submit" value="Filter Rooms" />
+    </form>
+  </section>
+
+  <!-- Update Room Status Section -->
+  <section id="update-room-status" class="section__container">
+    <h1>Update Room Status</h1>
+    <form method="POST" action="update_room_status_process.php">
+      <label for="room_id">Room ID:</label>
+      <input type="number" id="room_id" name="room_id" required />
+
+      <label for="status">Select Room Status:</label>
+      <select name="status" id="status" required>
+        <option value="Available">Available</option>
+        <option value="Booked">Booked</option>
+        <option value="Under Maintenance">Under Maintenance</option>
+      </select>
+
+      <input type="submit" value="Update Status" />
+    </form>
+  </section>
+
+</body>
+</html>
